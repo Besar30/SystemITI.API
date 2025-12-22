@@ -1,5 +1,7 @@
 ﻿using SchoolProject.Shared.Absractions;
+using System.Collections.Generic;
 using SystemITI.API.Entity.Procedures;
+using SystemITI.API.Errors;
 using SystemITI.API.Infrastructure.Abstracts.Procedures;
 using SystemITI.API.Services.ServicesAbstracts;
 
@@ -11,7 +13,10 @@ namespace SystemITI.API.Services.Implementation
 
         public async Task<Result<IReadOnlyList<getexam>>> getExamServices(getexamParameters Parameters)
         {
-           var result= await _igetexamProcRepository.Getexam(Parameters);
+            var ExamIsExist = await _igetexamProcRepository.CheckExamIsExist(Parameters.examid);
+            if (!ExamIsExist)
+                return Result.Failure<IReadOnlyList<getexam>>(ExamErrors.ExamIsNotFound);
+            var result = await _igetexamProcRepository.Getexam(Parameters);
             return Result.Success(result);
         }
 

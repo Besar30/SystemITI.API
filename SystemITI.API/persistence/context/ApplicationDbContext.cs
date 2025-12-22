@@ -17,6 +17,8 @@ namespace SystemITI.API.persistence.context
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Exam>().ToTable("Exam"); // موجودة بالفعل
+
             builder.Entity<getexam>().HasNoKey();
             builder.Entity<generateExam>().HasNoKey();
             base.OnModelCreating(builder);

@@ -15,7 +15,7 @@ namespace SystemITI.API.Core.Featuer.Exam.Query.Handler
             var parm = new getexamParameters();
             parm.examid = request.Id;
             var result = await _examServices.getExamServices(parm);
-            return Result.Success(result.Value.ToList());
+            return result.IsSuccess? Result.Success(result.Value.ToList()):Result.Failure<List<getexam>>(result.error);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StoredProcedureEFCore;
+using System.Threading.Tasks;
 using SystemITI.API.Entity.Procedures;
 using SystemITI.API.Infrastructure.Abstracts.Procedures;
 using SystemITI.API.persistence.context;
@@ -25,9 +26,9 @@ namespace SystemITI.API.Infrastructure.Reposatories
                 
         }
 
-        public Task GenertateExam(generateExam parameters)
+        public async Task<bool> CheckExamIsExist(int Id)
         {
-            throw new NotImplementedException();
+            return await _context.Exams.AnyAsync(x=>x.ExamId == Id);
         }
     }
 }

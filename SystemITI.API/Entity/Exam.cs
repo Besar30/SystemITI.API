@@ -7,8 +7,16 @@ namespace SystemITI.API.Entity
     public class Exam
     {
         [Key]
-        public int exam_id { get; set; }
-        public DateTime exam_date { get; set; }
-        public int exam_duration { get; set; }
+        [Column("exam_id")]
+        public int ExamId { get; set; }
+
+        [Column("exam_date")]
+        public DateTime ExamDate { get; set; }
+
+        [Column("exam_duration")]
+        public int ExamDuration { get; set; }
+
+        [Column("crs_id")]
+        public int? CourseId { get; set; } // لأنه بيقبل null
     }
 }

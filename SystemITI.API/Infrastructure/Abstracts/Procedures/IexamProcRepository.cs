@@ -6,5 +6,6 @@ namespace SystemITI.API.Infrastructure.Abstracts.Procedures
     {
         public Task<IReadOnlyList<getexam>> Getexam(getexamParameters parameters);
         public Task GenertateExam(generateExamParameters parameters);
+        public Task<bool> CheckExamIsExist(int Id);
     }
 }
