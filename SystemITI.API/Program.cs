@@ -21,7 +21,9 @@ builder.Services.AddDbContext<ApplicationDbContext>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
-builder.Services.AddScoped<IgetexamProcRepository, getexamProcRepository>();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());    
+
+builder.Services.AddScoped<IexamProcRepository, examProcRepository>();
 builder.Services.AddScoped<IExamServices, ExamServices>();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

@@ -5,14 +5,20 @@ using SystemITI.API.Services.ServicesAbstracts;
 
 namespace SystemITI.API.Services.Implementation
 {
-    public class ExamServices(IgetexamProcRepository igetexamProcRepository) : IExamServices
+    public class ExamServices(IexamProcRepository igetexamProcRepository) : IExamServices
     {
-        private readonly IgetexamProcRepository _igetexamProcRepository = igetexamProcRepository;
+        private readonly IexamProcRepository _igetexamProcRepository = igetexamProcRepository;
 
         public async Task<Result<IReadOnlyList<getexam>>> getExamServices(getexamParameters Parameters)
         {
            var result= await _igetexamProcRepository.Getexam(Parameters);
             return Result.Success(result);
+        }
+
+        public async Task<Result> generateExam(generateExamParameters parameters)
+        {
+           await _igetexamProcRepository.GenertateExam(parameters);
+            return Result.Success();
         }
     }
 }

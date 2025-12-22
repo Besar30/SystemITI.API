@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Api.Const;
+using SystemITI.API.Core.Featuer.Exam.Command.Models;
 using SystemITI.API.Core.Featuer.Exam.Query.Models;
 
 namespace SystemITI.API.Controllers
@@ -16,6 +17,13 @@ namespace SystemITI.API.Controllers
         public async Task<IActionResult> GetExamAsync([FromRoute] int Id)
         {
             var result= await _mediator.Send(new GetExamRequestQuery(Id));
+            return result.IsSuccess ?
+                Ok(result) : result.ToProblem();
+        }
+        [HttpPost("Generate-Exam")]
+        public async Task<IActionResult> GenereateExamAsync([FromBody] GenerateExamCommandRequest commad)
+        {
+            var result = await _mediator.Send(commad);
             return result.IsSuccess ?
                 Ok(result) : result.ToProblem();
         }

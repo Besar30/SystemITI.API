@@ -6,5 +6,6 @@ namespace SystemITI.API.Services.ServicesAbstracts
     public interface IExamServices
     {
         public Task<Result<IReadOnlyList<getexam>>> getExamServices(getexamParameters Parameters);
+        public Task<Result> generateExam(generateExamParameters parameters);
     }
 }
