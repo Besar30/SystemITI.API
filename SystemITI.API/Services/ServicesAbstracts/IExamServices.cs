@@ -1,0 +1,10 @@
+﻿using SchoolProject.Shared.Absractions;
+using SystemITI.API.Entity.Procedures;
+
+namespace SystemITI.API.Services.ServicesAbstracts
+{
+    public interface IExamServices
+    {
+        public Task<Result<IReadOnlyList<getexam>>> getExamServices(getexamParameters Parameters);
+    }
+}
