@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using System.Reflection;
 using SystemITI.API.Infrastructure.Abstracts.Procedures;
 using SystemITI.API.Infrastructure.Reposatories;
@@ -17,6 +17,9 @@ builder.Services.AddMediatR(cfg =>
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>
     (options => options.UseSqlServer(connectionString));
+builder.Host.UseSerilog((context, configuration) =>
+
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -40,7 +43,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseSerilogRequestLogging();
 app.MapControllers();
 
 app.Run();
