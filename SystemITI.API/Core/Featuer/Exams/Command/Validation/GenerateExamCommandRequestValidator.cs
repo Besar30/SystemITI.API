@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using SystemITI.API.Core.Featuer.Exam.Command.Models;
+using SystemITI.API.Core.Featuer.Exams.Command.Models;
 
-namespace SystemITI.API.Core.Featuer.Exam.Command.Validation
+namespace SystemITI.API.Core.Featuer.Exams.Command.Validation
 {
     public class GenerateExamCommandRequestValidator:AbstractValidator<GenerateExamCommandRequest>
     {

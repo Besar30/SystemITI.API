@@ -1,5 +1,6 @@
 ﻿using SchoolProject.Shared.Absractions;
 using System.Collections.Generic;
+using SystemITI.API.Entity;
 using SystemITI.API.Entity.Procedures;
 using SystemITI.API.Errors;
 using SystemITI.API.Infrastructure.Abstracts.Procedures;
@@ -24,6 +25,17 @@ namespace SystemITI.API.Services.Implementation
         {
            await _igetexamProcRepository.GenertateExam(parameters);
             return Result.Success();
+        }
+
+        public async Task<List<Exam>> GetAllExam()
+        {
+            return await _igetexamProcRepository.GetAllExams();
+        }
+
+        public async Task<Result<IReadOnlyList<getModelAnswerExam>>> getModelAnswerExam(getModelAnswerExamParameters Parameters)
+        {
+           var result= await _igetexamProcRepository.getModelAnswerExam(Parameters);
+            return Result.Success(result);
         }
     }
 }

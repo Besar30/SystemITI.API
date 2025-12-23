@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using SchoolProject.Shared.Absractions;
-using SystemITI.API.Core.Featuer.Exam.Command.Models;
+using SystemITI.API.Core.Featuer.Exams.Command.Models;
 using SystemITI.API.Entity.Procedures;
 using SystemITI.API.Services.ServicesAbstracts;
-
-namespace SystemITI.API.Core.Featuer.Exam.Command.Handler
+namespace SystemITI.API.Core.Featuer.Exams.Command.Handler
 {
     public class ExamCommandHandler(IMapper mapper ,IExamServices examServices) : IRequestHandler<GenerateExamCommandRequest, Result<string>>
     {

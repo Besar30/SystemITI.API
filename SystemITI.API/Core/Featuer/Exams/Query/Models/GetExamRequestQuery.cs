@@ -2,7 +2,7 @@
 using SchoolProject.Shared.Absractions;
 using SystemITI.API.Entity.Procedures;
 
-namespace SystemITI.API.Core.Featuer.Exam.Query.Models
+namespace SystemITI.API.Core.Featuer.Exams.Query.Models
 {
     public class GetExamRequestQuery:IRequest<Result<List<getexam>>>
     {

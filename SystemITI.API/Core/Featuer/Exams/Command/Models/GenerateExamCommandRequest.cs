@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SchoolProject.Shared.Absractions;
 
-namespace SystemITI.API.Core.Featuer.Exam.Command.Models
+namespace SystemITI.API.Core.Featuer.Exams.Command.Models
 {
     public class GenerateExamCommandRequest:IRequest<Result<string>>
     {
