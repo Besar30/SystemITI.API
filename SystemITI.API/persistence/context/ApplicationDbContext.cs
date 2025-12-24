@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using System.Reflection.Emit;
 using SystemITI.API.Entity;
 using SystemITI.API.Entity.Procedures;
 
 namespace SystemITI.API.persistence.context
 {
-    public class ApplicationDbContext:IdentityDbContext
+    public class ApplicationDbContext:IdentityDbContext<User,ApplicationRole, string>
     {
         public DbSet<getexam> getexamResults { get; set; }
         public DbSet<getModelAnswerExam> getModelAnswerExam {  get; set; }
@@ -16,9 +18,11 @@ namespace SystemITI.API.persistence.context
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Exam>().ToTable("Exam");
-            builder.Entity<getexam>().HasNoKey();
-            builder.Entity<getModelAnswerExam>().HasNoKey();
+            builder.Entity<Exam>().ToTable("Exam", t => t.ExcludeFromMigrations());
+            builder.Entity<getexam>().HasNoKey().ToView(null);
+
+            builder.Entity<getModelAnswerExam>().HasNoKey().ToView(null);
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(builder);
         }
     }

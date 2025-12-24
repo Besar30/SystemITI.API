@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Reflection;
+using SystemITI.API.Entity;
+using SystemITI.API.Infrastructure.Abstracts;
 using SystemITI.API.Infrastructure.Abstracts.Procedures;
 using SystemITI.API.Infrastructure.Reposatories;
 using SystemITI.API.persistence.context;
@@ -21,13 +23,22 @@ builder.Host.UseSerilog((context, configuration) =>
 
     configuration.ReadFrom.Configuration(context.Configuration));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<User, ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());    
 
 builder.Services.AddScoped<IexamProcRepository, examProcRepository>();
 builder.Services.AddScoped<IExamServices, ExamServices>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+var Jwtsetting = builder.Configuration.GetSection(JwtOptions.NameSection)
+    .Get<JwtOptions>();
+builder.Services.AddOptions<JwtOptions>()
+    .BindConfiguration(JwtOptions.NameSection)
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+    
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
@@ -41,7 +52,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 app.UseSerilogRequestLogging();
 app.MapControllers();

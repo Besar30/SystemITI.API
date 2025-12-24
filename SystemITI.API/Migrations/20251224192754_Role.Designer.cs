@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SystemITI.API.persistence.context;
 
@@ -11,9 +12,11 @@ using SystemITI.API.persistence.context;
 namespace SystemITI.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251224192754_Role")]
+    partial class Role
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,36 +48,6 @@ namespace SystemITI.API.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClaimType = "permissions",
-                            ClaimValue = "Exam:Get",
-                            RoleId = "0195442f-5b32-7334-9a35-d43ff70d3aa9"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ClaimType = "permissions",
-                            ClaimValue = "Exam:Generate",
-                            RoleId = "0195442f-5b32-7334-9a35-d43ff70d3aa9"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ClaimType = "permissions",
-                            ClaimValue = "Exam:GetModelAnser",
-                            RoleId = "0195442f-5b32-7334-9a35-d43ff70d3aa9"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ClaimType = "permissions",
-                            ClaimValue = "Exam:GetStudentAnswer",
-                            RoleId = "0195442f-5b32-7334-9a35-d43ff70d3aa9"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -137,13 +110,6 @@ namespace SystemITI.API.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "0195442f-5b32-7163-9117-b7023daacb2d",
-                            RoleId = "0195442f-5b32-7334-9a35-d43ff70d3aa9"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -196,35 +162,6 @@ namespace SystemITI.API.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "0195442f-5b32-7334-9a35-d43ff70d3aa9",
-                            ConcurrencyStamp = "0195442f-5b32-761a-b2ee-cfca69434828",
-                            IsDefualt = false,
-                            IsDelete = false,
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "0195442f-5b32-7b00-a097-61b7c3baec76",
-                            ConcurrencyStamp = "0195442f-5b32-7bfc-8b9c-18f34c1d2eea",
-                            IsDefualt = true,
-                            IsDelete = false,
-                            Name = "Student",
-                            NormalizedName = "STUDENT"
-                        },
-                        new
-                        {
-                            Id = "0195442f-5b32-8000-b111-22aa33bb44cc",
-                            ConcurrencyStamp = "0195442f-5b32-8001-c222-33bb44cc55dd",
-                            IsDefualt = true,
-                            IsDelete = false,
-                            Name = "Instructor",
-                            NormalizedName = "INSTRUCTOR"
-                        });
                 });
 
             modelBuilder.Entity("SystemITI.API.Entity.Exam", b =>
@@ -383,27 +320,6 @@ namespace SystemITI.API.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "0195442f-5b32-7163-9117-b7023daacb2d",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "0195442f-5b32-7594-8754-260776e9cdcc",
-                            Email = "admin@SchoolSystem.com",
-                            EmailConfirmed = true,
-                            FName = "SystemITI",
-                            LName = "Admin",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@SCHOOLSYSTEM.COM",
-                            NormalizedUserName = "ADMIN@SCHOOLSYSTEM.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEES76XCzEAJzOKK3RHphtyNuJc52FtrqMqoDuSoo921MiNJ/llOGYPXIq92thIuxvg==",
-                            PhoneNumber = "01205024661",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "55BF92C9EF0249CDA210D85D1A851BC9",
-                            TwoFactorEnabled = false,
-                            UserName = "School-Project"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
