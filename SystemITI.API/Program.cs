@@ -1,7 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Reflection;
+using System.Text;
 using SystemITI.API.Entity;
 using SystemITI.API.Infrastructure.Abstracts;
 using SystemITI.API.Infrastructure.Abstracts.Procedures;
@@ -26,8 +31,9 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services.AddIdentity<User, ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());    
-
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddFluentValidationAutoValidation()
+    .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IexamProcRepository, examProcRepository>();
 builder.Services.AddScoped<IExamServices, ExamServices>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
@@ -38,7 +44,26 @@ builder.Services.AddOptions<JwtOptions>()
     .BindConfiguration(JwtOptions.NameSection)
     .ValidateDataAnnotations()
     .ValidateOnStart();
-    
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+var jwtOptions = builder.Configuration.GetSection(JwtOptions.NameSection).Get<JwtOptions>();
+options.TokenValidationParameters = new TokenValidationParameters
+{
+    ValidateIssuer = true,
+    ValidIssuer = jwtOptions.Issuer,
+    ValidateAudience = true,
+    ValidAudience = jwtOptions.Audience,
+    ValidateLifetime = true,
+    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key)),
+    ValidateIssuerSigningKey = true
+};
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
@@ -52,6 +77,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseSerilogRequestLogging();
 app.MapControllers();

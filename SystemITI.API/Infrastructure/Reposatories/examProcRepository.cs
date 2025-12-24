@@ -22,7 +22,7 @@ namespace SystemITI.API.Infrastructure.Reposatories
         public async Task GenertateExam(generateExamParameters parameters)
         {
            await  _context.Database
-                 .ExecuteSqlInterpolatedAsync($"EXEC dbo.generateExam @Crs_id={parameters.Crs_id} , @mcqNumber={parameters.mcqNumber}, @tfNumber={parameters.tfNumber}");
+                 .ExecuteSqlInterpolatedAsync($"EXEC dbo.generateExam @Crsid={parameters.Crs_id} , @mcqNumber={parameters.mcqNumber}, @tfNumber={parameters.tfNumber}");
                 
         }
 
