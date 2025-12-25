@@ -8,6 +8,7 @@ namespace SystemITI.API.Core.Mapping.ExamMapping
 
             GenerteExamCommandMapping();
             getModelAnswerExamPramRequestMapping();
+            InsertStudentAnswerCommandMapping();
         }
     }
 }

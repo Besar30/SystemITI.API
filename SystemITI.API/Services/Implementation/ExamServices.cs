@@ -37,5 +37,14 @@ namespace SystemITI.API.Services.Implementation
            var result= await _igetexamProcRepository.getModelAnswerExam(Parameters);
             return Result.Success(result);
         }
+
+        public async Task<Result< insertstudentanswer>> insertstudentanswer(insertstudentanswerParameters parameters)
+        {
+            var ExamIsExist = await _igetexamProcRepository.CheckExamIsExist(parameters.exam_id);
+            if (!ExamIsExist)
+                return Result.Failure<insertstudentanswer>(ExamErrors.ExamIsNotFound);
+           var result= await _igetexamProcRepository.insertstudentanswer(parameters);
+            return Result.Success(result);
+        }
     }
 }

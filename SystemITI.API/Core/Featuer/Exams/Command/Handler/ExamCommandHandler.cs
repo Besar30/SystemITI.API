@@ -6,7 +6,9 @@ using SystemITI.API.Entity.Procedures;
 using SystemITI.API.Services.ServicesAbstracts;
 namespace SystemITI.API.Core.Featuer.Exams.Command.Handler
 {
-    public class ExamCommandHandler(IMapper mapper ,IExamServices examServices) : IRequestHandler<GenerateExamCommandRequest, Result<string>>
+    public class ExamCommandHandler(IMapper mapper ,IExamServices examServices) : 
+                                                                          IRequestHandler<GenerateExamCommandRequest, Result<string>>,
+                                                                           IRequestHandler<InsertStudentAnswerRequest,Result<insertstudentanswer>>
     {
         private readonly IMapper _mapper = mapper;
         private readonly IExamServices _examServices = examServices;
@@ -17,6 +19,14 @@ namespace SystemITI.API.Core.Featuer.Exams.Command.Handler
             var result = await _examServices.generateExam(prams);
             return result.IsSuccess ?
                 Result.Success("Exam Generated Succsesflly") : Result.Failure<string>(result.error);
+        }
+
+        public async Task<Result<insertstudentanswer>> Handle(InsertStudentAnswerRequest request, CancellationToken cancellationToken)
+        {
+            var pram= _mapper.Map<insertstudentanswerParameters>(request);
+            var result = await _examServices.insertstudentanswer(pram);
+            return result.IsSuccess ?
+                Result.Success(result.Value) :Result.Failure<insertstudentanswer>(result.error);
         }
     }
 }

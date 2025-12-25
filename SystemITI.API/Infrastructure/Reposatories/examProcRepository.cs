@@ -43,5 +43,14 @@ namespace SystemITI.API.Infrastructure.Reposatories
                                        .ToListAsync();
             return result;
         }
+
+        public async Task<insertstudentanswer> insertstudentanswer(insertstudentanswerParameters parameters)
+        {
+            var result =await  _context.
+                insertstudentanswers.
+                FromSqlInterpolated($"EXEC dbo.insertstudentanswer @exam_id={parameters.exam_id} , @std_id={parameters.std_id} , @q_id={parameters.q_id} , @std_choice={parameters.std_choice}")
+                .ToListAsync();  
+            return result.First();
+        }
     }
 }

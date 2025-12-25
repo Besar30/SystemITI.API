@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Api.Const;
-using SchoolProject.Infrastructure.Abstracts.Const;
 using SystemITI.API.Core.Featuer.Exams.Command.Models;
 using SystemITI.API.Core.Featuer.Exams.Query.Models;
 using SystemITI.API.Infrastructure.Abstracts.Const;
@@ -46,6 +45,14 @@ namespace SystemITI.API.Controllers
         {
             var result= await _mediator.Send(new getModelAnswerExamRequestQuery(id));
             return result.IsSuccess ?
+                Ok(result) : result.ToProblem();
+        }
+        [Authorize(Roles = DefaultRoles.Admin)]
+        [HttpPost("Insert-Student-Answer")]
+        public async Task<IActionResult> InsertStudentAnswer([FromBody] InsertStudentAnswerRequest command)
+        {
+            var result = await _mediator.Send(command);
+            return result.IsSuccess?
                 Ok(result) : result.ToProblem();
         }
     }

@@ -10,5 +10,6 @@ namespace SystemITI.API.Infrastructure.Abstracts.Procedures
         public Task GenertateExam(generateExamParameters parameters);
         public Task<bool> CheckExamIsExist(int Id);
         public Task<List<Exam>> GetAllExams();
+        public Task<insertstudentanswer> insertstudentanswer(insertstudentanswerParameters parameters);
     }
 }
