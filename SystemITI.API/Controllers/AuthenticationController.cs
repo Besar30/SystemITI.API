@@ -17,5 +17,11 @@ namespace SystemITI.API.Controllers
             var result = await _mediator.Send(command);
             return result.IsSuccess ? Ok(result) : result.ToProblem();
         }
+        [HttpPost("Add-Student")]
+        public async Task<IActionResult> AddStudntAsync([FromBody] AddStudentCommandRequest command)
+        {
+            var result = await _mediator.Send(command);
+            return result.IsSuccess ? Ok(result) : result.ToProblem();
+        }
     }
 }

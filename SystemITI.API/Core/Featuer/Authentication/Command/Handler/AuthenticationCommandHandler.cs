@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Shared.Absractions;
@@ -13,11 +14,14 @@ using SystemITI.API.Services.ServicesAbstracts;
 
 namespace SystemITI.API.Core.Featuer.Authentication.Command.Handler
 {
-    public class AuthenticationCommandHandler(UserManager<User> userManager, IJwtProvider jwtProvider, ApplicationDbContext context) : IRequestHandler<SigninCommandRequest, Result<SigninResponse>>
+    public class AuthenticationCommandHandler(UserManager<User> userManager, IJwtProvider jwtProvider, ApplicationDbContext context,IMapper mapper) :
+                                                                                                                                      IRequestHandler<SigninCommandRequest, Result<SigninResponse>>,
+                                                                                                                                      IRequestHandler<AddStudentCommandRequest,Result<string>>
     {
         private readonly UserManager<User> _userManager = userManager;
         private readonly IJwtProvider _jwtProvider = jwtProvider;
         private readonly ApplicationDbContext _context = context;
+        private readonly IMapper _mapper = mapper;
         private readonly int _refreshTokenExpriyDays = 14;
         public async Task<Result<SigninResponse>> Handle(SigninCommandRequest request, CancellationToken cancellationToken)
         {
@@ -75,6 +79,27 @@ namespace SystemITI.API.Core.Featuer.Authentication.Command.Handler
                                      .Distinct()
                                      .ToListAsync(cancellationToken);
             return (userRoles, userPermissions);
+        }
+
+        public async Task<Result<string>> Handle(AddStudentCommandRequest request, CancellationToken cancellationToken)
+        {
+            //check if email is found
+            var emailIsExist = await _userManager.FindByEmailAsync(request.Email);
+            if (emailIsExist!=null)
+                return Result.Failure<string>(AuthenticationErrors.EmailAlreadyExists);
+            //check if user name is exist
+            var userNameIsExist= await _userManager.FindByNameAsync(request.UserName);
+            if (userNameIsExist != null)
+                return Result.Failure<string>(AuthenticationErrors.UsernameAlreadyExists);
+            var user = _mapper.Map<User>(request);
+            var result = await _userManager.CreateAsync(user, request.Password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "Student");
+                return Result.Success($"User '{user.UserName}' created successfully.");
+
+            }
+            return Result.Failure<string>(new Error(result.Errors.First().Code, result.Errors.First().Description, StatusCodes.Status409Conflict));
         }
     }
 }
