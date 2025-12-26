@@ -12,6 +12,7 @@ namespace SystemITI.API.persistence.context
         public DbSet<getexam> getexamResults { get; set; }
         public DbSet<getModelAnswerExam> getModelAnswerExam {  get; set; }
         public DbSet<Exam> Exams { get; set; }
+        public DbSet<Student> Students { get; set; }
         public DbSet<insertstudentanswer> insertstudentanswers { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -20,6 +21,7 @@ namespace SystemITI.API.persistence.context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Exam>().ToTable("Exam", t => t.ExcludeFromMigrations());
+            builder.Entity<Student>().ToTable("Student", t => t.ExcludeFromMigrations());
             builder.Entity<getexam>().HasNoKey().ToView(null);
 
             builder.Entity<getModelAnswerExam>().HasNoKey().ToView(null);

@@ -52,5 +52,10 @@ namespace SystemITI.API.Infrastructure.Reposatories
                 .ToListAsync();  
             return result.First();
         }
+
+        public async Task<bool> StudentIsExist(int Id)
+        {
+            return await _context.Students.AnyAsync(x=>x.std_id == Id);
+        }
     }
 }

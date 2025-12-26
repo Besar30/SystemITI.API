@@ -43,6 +43,9 @@ namespace SystemITI.API.Services.Implementation
             var ExamIsExist = await _igetexamProcRepository.CheckExamIsExist(parameters.exam_id);
             if (!ExamIsExist)
                 return Result.Failure<insertstudentanswer>(ExamErrors.ExamIsNotFound);
+            var StudentIsExist = await _igetexamProcRepository.StudentIsExist(parameters.std_id);
+            if(!StudentIsExist)
+                return Result.Failure< insertstudentanswer >(StudentError.StudentIsNotFound);
            var result= await _igetexamProcRepository.insertstudentanswer(parameters);
             return Result.Success(result);
         }
