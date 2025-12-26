@@ -6,6 +6,7 @@ namespace SystemITI.API.Entity.Procedures
     [Keyless]
     public class getexam
     {
+        public int exam_id { get; set; }
         public int q_id { get; set; }
         public string q_text { get; set; }
         public string? Choice1 { get; set; }
