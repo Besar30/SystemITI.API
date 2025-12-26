@@ -47,7 +47,6 @@ namespace SystemITI.API.Controllers
             return result.IsSuccess ?
                 Ok(result) : result.ToProblem();
         }
-        [Authorize(Roles = DefaultRoles.Admin)]
         [HttpPost("Insert-Student-Answer")]
         public async Task<IActionResult> InsertStudentAnswer([FromBody] InsertStudentAnswerRequest command)
         {

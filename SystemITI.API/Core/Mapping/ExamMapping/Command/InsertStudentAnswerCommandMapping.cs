@@ -7,7 +7,7 @@ namespace SystemITI.API.Core.Mapping.ExamMapping
     {
         void InsertStudentAnswerCommandMapping()
         {
-            CreateMap<insertstudentanswerParameters, InsertStudentAnswerRequest>();
+            CreateMap<InsertStudentAnswerRequest,insertstudentanswerParameters>();
         }
     }
 }
