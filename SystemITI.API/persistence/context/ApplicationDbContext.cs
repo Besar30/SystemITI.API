@@ -14,6 +14,7 @@ namespace SystemITI.API.persistence.context
         public DbSet<Exam> Exams { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<insertstudentanswer> insertstudentanswers { get; set; }
+        public DbSet<reviewstudentanswers> reviewstudentanswers { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -26,6 +27,8 @@ namespace SystemITI.API.persistence.context
 
             builder.Entity<getModelAnswerExam>().HasNoKey().ToView(null);
             builder.Entity<insertstudentanswer>().HasNoKey().ToView(null);
+            builder.Entity<reviewstudentanswers>().HasNoKey().ToView(null);
+
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(builder);
         }

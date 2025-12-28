@@ -12,5 +12,6 @@ namespace SystemITI.API.Infrastructure.Abstracts.Procedures
         public Task<List<Exam>> GetAllExams();
         public Task<insertstudentanswer> insertstudentanswer(insertstudentanswerParameters parameters);
         public Task<bool> StudentIsExist(int Id);
+        public Task<List<reviewstudentanswers>> reviewstudentanswers(reviewstudentanswersParameters parameters);
     }
 }

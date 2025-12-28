@@ -57,5 +57,12 @@ namespace SystemITI.API.Infrastructure.Reposatories
         {
             return await _context.Students.AnyAsync(x=>x.std_id == Id);
         }
+
+        public async Task<List<reviewstudentanswers>> reviewstudentanswers(reviewstudentanswersParameters parameters)
+        {
+           var result = await _context.reviewstudentanswers.FromSqlInterpolated($"EXEC dbo.reviewstudentanswers @exam_id={parameters.exam_id} , @std_id={parameters.std_id}")
+                                                           .ToListAsync();
+            return result;
+        }
     }
 }

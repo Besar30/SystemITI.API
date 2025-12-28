@@ -10,7 +10,8 @@ namespace SystemITI.API.Core.Featuer.Exams.Query.Handler
 {
     public class ExamQueryHandler (IExamServices examServices ,IMapper mapper): IRequestHandler<GetExamRequestQuery, Result<List<getexam>>>,
                                                                 IRequestHandler<GetAllExamRequestQuery,Result<List<Exam>>>,
-                                                                IRequestHandler<getModelAnswerExamRequestQuery,Result<List<getModelAnswerExam>>>
+                                                                IRequestHandler<getModelAnswerExamRequestQuery,Result<List<getModelAnswerExam>>>,
+                                                                IRequestHandler<reviewstudentanswersRequestQuery,Result<List<reviewstudentanswers>>>
     {
         private readonly IExamServices _examServices = examServices;
         private readonly IMapper _mapper = mapper;
@@ -35,6 +36,14 @@ namespace SystemITI.API.Core.Featuer.Exams.Query.Handler
             var result= await _examServices.getModelAnswerExam(pram);
             return result.IsSuccess ?
                 Result.Success(result.Value.ToList()) : Result.Failure<List<getModelAnswerExam>>(result.error);
+        }
+
+        public async Task<Result<List<reviewstudentanswers>>> Handle(reviewstudentanswersRequestQuery request, CancellationToken cancellationToken)
+        {
+           var pram= _mapper.Map<reviewstudentanswersParameters>(request);
+            var result= await _examServices.reviewstudentanswers(pram);
+            return result.IsSuccess ?
+                              Result.Success(result.Value):Result.Failure<List<reviewstudentanswers>>(result.error);
         }
     }
 }

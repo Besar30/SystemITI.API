@@ -5,6 +5,7 @@ using SchoolProject.Api.Const;
 using SystemITI.API.Core.Featuer.Exams.Command.Models;
 using SystemITI.API.Core.Featuer.Exams.Query.Models;
 using SystemITI.API.Infrastructure.Abstracts.Const;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace SystemITI.API.Controllers
 {
@@ -52,6 +53,13 @@ namespace SystemITI.API.Controllers
         {
             var result = await _mediator.Send(command);
             return result.IsSuccess?
+                Ok(result) : result.ToProblem();
+        }
+        [HttpGet("Review-Student-Answers")]
+        public async Task<IActionResult> reviewstudentanswers([FromBody] reviewstudentanswersRequestQuery query)
+        {
+            var result = await _mediator.Send(query);
+            return result.IsSuccess ?
                 Ok(result) : result.ToProblem();
         }
     }

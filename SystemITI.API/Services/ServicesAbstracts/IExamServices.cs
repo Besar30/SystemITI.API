@@ -11,5 +11,6 @@ namespace SystemITI.API.Services.ServicesAbstracts
         public Task<Result> generateExam(generateExamParameters parameters);
         public Task<List<Exam>> GetAllExam();
         public Task<Result< insertstudentanswer>> insertstudentanswer(insertstudentanswerParameters parameters);
+        public Task<Result<List<reviewstudentanswers>>> reviewstudentanswers(reviewstudentanswersParameters parameters);
     }
 }
