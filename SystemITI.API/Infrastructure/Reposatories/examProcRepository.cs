@@ -70,5 +70,12 @@ namespace SystemITI.API.Infrastructure.Reposatories
             var result=await _context.getexamresults.FromSqlInterpolated($"EXEC dbo.getexamresults @exam_id={parameters.exam_id} , @std_id={parameters.std_id}").ToListAsync();
             return result;
         }
+
+        public async Task<getexamstatistics> getexamstatistics(getexamstatisticssParameters parameters)
+        {
+            var result = await _context.getexamstatistics.
+                             FromSqlInterpolated($"EXEC dbo.getexamstatistics @exam_id={parameters.exam_id}").ToListAsync();
+            return result.FirstOrDefault();
+        }
     } 
 }

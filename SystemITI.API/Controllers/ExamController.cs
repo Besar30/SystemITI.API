@@ -69,5 +69,14 @@ namespace SystemITI.API.Controllers
             return result.IsSuccess ?
                 Ok(result) : result.ToProblem();
         }
+        [HttpGet("Get-Exam-Statistic")]
+        [Authorize(Roles = DefaultRoles.Admin)]
+
+        public async Task<IActionResult> GetExamStatistic([FromBody] getexamstatisticsRequestQuery query)
+        {
+            var result = await _mediator.Send(query);
+            return result.IsSuccess ?
+                Ok(result) : result.ToProblem();
+        }
     }
 }

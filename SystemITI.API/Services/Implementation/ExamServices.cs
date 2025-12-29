@@ -73,5 +73,16 @@ namespace SystemITI.API.Services.Implementation
             var result= await _igetexamProcRepository.GetGradeStudent(parameters);
             return Result.Success(result);
         }
+
+        public async Task<Result<getexamstatistics>> GetExamStatistics(getexamstatisticssParameters parameters)
+        {
+            var examIsExist = await _igetexamProcRepository.CheckExamIsExist(parameters.exam_id);
+            if (!examIsExist)
+                return Result.Failure<getexamstatistics>(ExamErrors.ExamIsNotFound);
+            var result=await _igetexamProcRepository.getexamstatistics(parameters);
+            if (result == null)
+                return Result.Failure<getexamstatistics>(ExamErrors.ExamStatisticsNotFound);
+            return Result.Success(result);
+        }
     }
 }

@@ -13,5 +13,6 @@ namespace SystemITI.API.Services.ServicesAbstracts
         public Task<Result< insertstudentanswer>> insertstudentanswer(insertstudentanswerParameters parameters);
         public Task<Result<List<reviewstudentanswers>>> reviewstudentanswers(reviewstudentanswersParameters parameters);
         public Task<Result<List<getexamresults>>> GetGradeStudent(getexamresultsParameters parameters);
+        public Task<Result<getexamstatistics>> GetExamStatistics(getexamstatisticssParameters parameters);
     }
 }

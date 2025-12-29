@@ -12,7 +12,8 @@ namespace SystemITI.API.Core.Featuer.Exams.Query.Handler
                                                                 IRequestHandler<GetAllExamRequestQuery,Result<List<Exam>>>,
                                                                 IRequestHandler<getModelAnswerExamRequestQuery,Result<List<getModelAnswerExam>>>,
                                                                 IRequestHandler<reviewstudentanswersRequestQuery,Result<List<reviewstudentanswers>>>,
-                                                                IRequestHandler<GetStudentGradeRequestQuery,Result<List<getexamresults>>>
+                                                                IRequestHandler<GetStudentGradeRequestQuery,Result<List<getexamresults>>>,
+                                                                IRequestHandler<getexamstatisticsRequestQuery,Result<getexamstatistics>>
     {
         private readonly IExamServices _examServices = examServices;
         private readonly IMapper _mapper = mapper;
@@ -53,6 +54,15 @@ namespace SystemITI.API.Core.Featuer.Exams.Query.Handler
             var result = await _examServices.GetGradeStudent(param);
             return result.IsSuccess ?
                           Result.Success(result.Value) : Result.Failure<List<getexamresults>>(result.error);
+        }
+
+        public async Task<Result<getexamstatistics>> Handle(getexamstatisticsRequestQuery request, CancellationToken cancellationToken)
+        {
+           var param=new getexamstatisticssParameters();
+            param.exam_id=request.exam_id;
+            var result=await _examServices.GetExamStatistics(param);
+            return result.IsSuccess?
+                Result.Success(result.Value) :Result.Failure<getexamstatistics>(result.error);
         }
     }
 }
