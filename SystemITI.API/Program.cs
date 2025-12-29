@@ -15,6 +15,19 @@ using SystemITI.API.persistence.context;
 using SystemITI.API.Services.Implementation;
 using SystemITI.API.Services.ServicesAbstracts;
 var builder = WebApplication.CreateBuilder(args);
+
+var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins", builder =>
+    {
+        builder.WithOrigins(allowedOrigins!)
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials();
+    });
+});
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(cfg =>
 {
