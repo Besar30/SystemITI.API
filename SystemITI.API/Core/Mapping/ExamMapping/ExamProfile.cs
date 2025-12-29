@@ -10,6 +10,7 @@ namespace SystemITI.API.Core.Mapping.ExamMapping
             getModelAnswerExamPramRequestMapping();
             InsertStudentAnswerCommandMapping();
             reviewstudentanswersRequestMapping();
+            GetStudentGradeRequestMapping();
         }
     }
 }

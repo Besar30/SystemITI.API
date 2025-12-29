@@ -62,5 +62,12 @@ namespace SystemITI.API.Controllers
             return result.IsSuccess ?
                 Ok(result) : result.ToProblem();
         }
+        [HttpGet("Get-Student-Grade")]
+        public async Task<IActionResult> GetStudentGradeAsync([FromBody] GetStudentGradeRequestQuery query)
+        {
+            var result = await _mediator.Send(query);
+            return result.IsSuccess ?
+                Ok(result) : result.ToProblem();
+        }
     }
 }

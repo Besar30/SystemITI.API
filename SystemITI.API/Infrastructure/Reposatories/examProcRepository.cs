@@ -64,5 +64,11 @@ namespace SystemITI.API.Infrastructure.Reposatories
                                                            .ToListAsync();
             return result;
         }
-    }
+
+        public async Task<List<getexamresults>> GetGradeStudent(getexamresultsParameters parameters)
+        {
+            var result=await _context.getexamresults.FromSqlInterpolated($"EXEC dbo.getexamresults @exam_id={parameters.exam_id} , @std_id={parameters.std_id}").ToListAsync();
+            return result;
+        }
+    } 
 }
