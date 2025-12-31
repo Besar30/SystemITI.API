@@ -11,7 +11,7 @@ namespace SystemITI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+     [Authorize]
     public class ExamController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
@@ -55,21 +55,21 @@ namespace SystemITI.API.Controllers
             return result.IsSuccess?
                 Ok(result) : result.ToProblem();
         }
-        [HttpGet("Review-Student-Answers")]
+        [HttpPost("Review-Student-Answers")]
         public async Task<IActionResult> reviewstudentanswers([FromBody] reviewstudentanswersRequestQuery query)
         {
             var result = await _mediator.Send(query);
             return result.IsSuccess ?
                 Ok(result) : result.ToProblem();
         }
-        [HttpGet("Get-Student-Grade")]
+        [HttpPost("Get-Student-Grade")]
         public async Task<IActionResult> GetStudentGradeAsync([FromBody] GetStudentGradeRequestQuery query)
         {
             var result = await _mediator.Send(query);
             return result.IsSuccess ?
                 Ok(result) : result.ToProblem();
         }
-        [HttpGet("Get-Exam-Statistic")]
+        [HttpPost("Get-Exam-Statistic")]
         [Authorize(Roles = DefaultRoles.Admin)]
 
         public async Task<IActionResult> GetExamStatistic([FromBody] getexamstatisticsRequestQuery query)
